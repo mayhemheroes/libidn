@@ -1,0 +1,4 @@
+project: PROJECT
+target: libidn_stringprep_fuzzer
+cmds:
+- cmd: /out/libidn_stringprep_fuzzer
