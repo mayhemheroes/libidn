@@ -15,7 +15,12 @@
 ################################################################################
 
 FROM gcr.io/oss-fuzz-base/base-builder
+RUN sed -i s/snapshot.ubuntu.com/archive.ubuntu.com/g /etc/apt/sources.list 2>/dev/null || true
 RUN apt-get update && apt-get install -y pkg-config autopoint autoconf autoconf-archive automake libtool gettext gengetopt curl gperf wget
+
+# Clone gnulib so bootstrap can use it without needing git submodule init
+RUN git clone --depth=1 https://git.savannah.gnu.org/git/gnulib.git /usr/local/gnulib
+ENV GNULIB_SRCDIR=/usr/local/gnulib
 
 COPY . libidn
 RUN rm -rf libidn/mayhem
